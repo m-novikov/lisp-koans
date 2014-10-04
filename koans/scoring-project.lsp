@@ -48,9 +48,16 @@
 ; More scoring examples are given in the tests below:
 ;
 ; Your goal is to write the score method.
+(defun score-number (num cnt)
+  (multiple-value-bind (triples remainder) (floor cnt 3)
+      (cond ((= num 5) (+ (* triples 100 num) (* remainder 50)))
+            ((= num 1) (+ (* triples 1000) (* remainder 100)))
+            (t (* triples 100 num))
+            )))
 
 (defun score (dice)
-  ; You need to write this method
+  (loop for num in (remove-duplicates dice)
+        sum (score-number num (count num dice)))
 )
 
 (define-test test-score-of-an-empty-list-is-zero
